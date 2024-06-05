@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <title>Item Management System</title>
+<head>
+    <script type="text/javascript"
+     src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js">
+    </script>
+
+    <script>
+        var app=angular.module("ItemMgtApp",[]);
+        app.controller("ItemMgtAppCntrl",function($scope){
+            $scope.ItemList=['pen','pencil','book']
+
+            $scope.addItem=function(){
+                if($scope.newItem){
+                    if($scope.ItemList.indexOf($scope.newItem)==-1){
+                        $scope.ItemList.push($scope.newItem)
+                    }
+                    else{
+                        alert("Item is already present in list")
+                    }
+                }
+                else{
+                    alert("Please enter the item to add!")
+                }
+            }
+            $scope.removeItem=function(item){
+                var yes=confirm("Sure, you want to remove item"+item)
+                if(yes==true){
+                    var index=$scope.ItemList.indexOf(item)
+                    $scope.ItemList.splice(index,1)
+                }
+            }
+        });
+    </script>   
+</head>
+<body ng-app="ItemMgtApp">
+    <h1>Item Management application</h1>
+
+    <div ng-controller="ItemMgtAppCntrl">
+    Enter the Item to add: <input type="text" ng-model="newItem">
+    <button ng-click="addItem()">ADD</button>
+
+    <table border="1">
+        <tr>
+            <th>SI.NO</th>
+            <th>Item</th>
+            <th>remove</th>
+        </tr>
+        <tr ng-repeat="item in ItemList">
+            <td>{{$index+1}}</td>
+            <td>{{item}}</td>
+            <td><button ng-click="removeItem(item)">Remove</button></td>
+        </tr>
+    </table>
+    <br>
+    Total number of Items:{{ItemList.length}}
+   </div>
+</body>
+</html>
